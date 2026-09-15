@@ -50,9 +50,14 @@ jobs:
           sed -i 's/^requirements = .*/requirements = python3,kivy/' buildozer.spec
           sed -i 's/^# android.accept_sdk_license = False/android.accept_sdk_license = True/' buildozer.spec
 
+      - name: Accept Android SDK licenses
+  run: |
+    yes | sdkmanager --licenses
+
       - name: Build APK
-        run: |
-          yes | buildozer -v android debug
+  run: |
+    buildozer -v android debug
+      
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
