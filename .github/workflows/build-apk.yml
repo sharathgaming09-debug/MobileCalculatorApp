@@ -51,22 +51,22 @@ jobs:
           sed -i 's/^# android.accept_sdk_license = False/android.accept_sdk_license = True/' buildozer.spec
 
       - name: Build APK
-  shell: bash
-  run: |
-    set +e
-    buildozer -v android debug 2>&1 | tee buildozer.log
-    STATUS=${PIPESTATUS[0]}
-    exit $STATUS
+        shell: bash
+        run: |
+          set +e
+          buildozer -v android debug 2>&1 | tee buildozer.log
+          STATUS=${PIPESTATUS[0]}
+          exit $STATUS
 
-- name: Upload Build Log
-  if: always()
-  uses: actions/upload-artifact@v4
-  with:
-    name: buildozer-log
-    path: buildozer.log
-  
+      - name: Upload Build Log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildozer-log
+          path: buildozer.log
 
       - name: Upload APK
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: MobileCalculator-APK
